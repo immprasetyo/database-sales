@@ -1,3 +1,4 @@
+-- Start by creating and populating database with some tables such as "sales", "pelanggan", "penjualan", "daerah", and "suplier_daerah"
 
 CREATE TABLE sales (
 	id_sales VARCHAR(10),
@@ -84,6 +85,8 @@ INSERT INTO suplier_daerah VALUES ('D003', 'PTT', 'Pulpen');
 INSERT INTO suplier_daerah VALUES ('D003', 'PTT', 'Penghapus');
 
 
+-- Query to displays all collumns in a table using two different ways
+
 SELECT *
 FROM sales AS "s", penjualan AS "pj", pelanggan AS "p", daerah AS "d", suplier_daerah AS "sd"
 WHERE s.id_sales = pj.id_sales
@@ -98,6 +101,8 @@ FROM sales AS "s" INNER JOIN penjualan AS "pj" ON s.id_sales = pj.id_sales
 				  INNER JOIN suplier_daerah AS "sd" ON d.id_daerah = sd.id_daerah;
 
 
+-- Query that returns "deal_penjualan" which lesser than "rerata_penjualan_tiap_daerah" using correlated subqueries
+
 SELECT *
 FROM (
 	SELECT s.nama_depan, s.nama_belakang, s.id_daerah, pj.deal_penjualan, (
@@ -111,6 +116,8 @@ WHERE s001.deal_penjualan < s001.rerata_penjualan_tiap_daerah
 ORDER BY s001.rerata_penjualan_tiap_daerah DESC;
 
 
+-- Query to finds sales who does not belong in "Jakarta Barat" using CASE statement
+
 SELECT s.nama_depan, s.nama_belakang, d.nama_daerah
 FROM sales AS "s" LEFT OUTER JOIN daerah AS "d" ON s.id_daerah = d.id_daerah
 GROUP BY s.nama_depan, s.nama_belakang, d.nama_daerah
@@ -118,3 +125,6 @@ HAVING MAX(CASE
 		   	WHEN d.nama_daerah IN ('Jakarta Barat') THEN 1 ELSE 0
 		   END) = 0
 ORDER BY d.nama_daerah;
+
+
+-- END, thank you for being here. I hope you have a nice day :)
